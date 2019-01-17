@@ -4,6 +4,7 @@
 using namespace std;
 class student {
 	private :
+		ofstream inform;
 		string name;
 		int math;
 		int phys;
@@ -23,7 +24,27 @@ class student {
 		  cout << "Номер группы : "; cin >> group; cout << endl;
 		  cout << "Год рождения "; cin >> year; cout << endl;
 		  cout << "Оценки : " << endl;
-		  cout << 
+		  cout << "Матан : "; cin >> math; cout << endl;
+		  cout << "Физика : "; cin >> phys; cout << endl;
+		  cout << "Химия : "; cin >> chem; cout << endl;
+		  cout << "Информатика : "; cin >> inf; cout << endl;
+		  av_ball;
+		  cout << "Средний балл : " << avarage_ball << endl;
+	  }
+	  void zapis() {
+		  inform.open("laba8.txt", ios_base::ate);// пишет в конец
+		  inform << "Фамилия и инициалы : " << name << endl;
+		  inform << "Номер группы : " << group<< endl;
+		  inform << "Год рождения " << year << endl;
+		  inform << "Оценки : " << endl;
+		  inform << "Матан : " << math<< endl;
+		  inform << "Физика : " << phys << endl;
+		  inform << "Химия : " << chem << endl;
+		  inform << "Информатика : " << inf << endl;
+		  inform << "Средний балл : " << avarage_ball << endl;
+	  }
+	  void av_ball() {
+		  avarage_ball = (math + chem + phys + inf) / 4;
 	  }
 };
 int main() {
