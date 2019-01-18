@@ -16,9 +16,11 @@ class student {
 		int year;
 		int group;
   public:
+	  student():name("N/A"),math(0),phys(0),inf(0),chem(0),avarage_ball(0),year(0),group(0)
+	  {}
 	  void getstud() {
 		  cout << "¬ведите информацию о студенте " << endl;
-		  cout << "‘амили€ и инициалы : "; getline(cin, name); cout << endl;
+		  cout << "‘амили€ и инициалы : "; getline(cin, name); getline(cin, name); cout << endl;
 		  cout << "Ќомер группы : "; cin >> group; cout << endl;
 		  cout << "√од рождени€ "; cin >> year; cout << endl;
 		  cout << "ќценки : " << endl;
@@ -68,9 +70,9 @@ int main() {
 	setlocale(LC_ALL, "rus");
 	int vybor,vybor1, s1, s2, s3, s4, s5;
 	student stud1, stud2, stud3, stud4, stud5;
-	s1 = s2 = s3 = s4 = s5 = 0;
+	s1 = 0; s2 = 0; s3 = 0; s4 = 0; s5 = 0;
 	int n,i,r;
-	string izway;		ifstream iz;
+	string izway;ifstream iz;
 	do {
 		cout << "ƒобро пожаловать в меню" << endl;
 		cout << "¬ыберите что хотите сделать : " << endl;
@@ -79,48 +81,48 @@ int main() {
 		cout << "5 - рейтинг " << " 0 - ¬ыход " << endl; cin >> vybor;
 		switch (vybor) {
 		case 1:
-			if (s1 = 0) {
+			if (s1 == 0) {
 				stud1.getstud();
 				stud1.zapis();
 				s1 = 1;
 				cout << "ѕродолжим создавать студентов? " << "0 - да " << "1 - нет " << endl; cin >> n;
-				if (n = 1) {
+				if (n == 1) {
 					break;
 				}
 			}
-			if (s2 = 0) {
+			if (s2 == 0) {
 				stud2.getstud();
 				stud2.zapis();
 				s2 = 1;
 				cout << "ѕродолжим создавать студентов? " << "0 - да " << "1 - нет " << endl; cin >> n;
-				if (n = 1) {
+				if (n == 1) {
 					break;
 				}
 			}
-			if (s3 = 0) {
+			if (s3 == 0) {
 				stud3.getstud();
 				stud3.zapis();
 				s3 = 1;
 				cout << "ѕродолжим создавать студентов? " << "0 - да " << "1 - нет " << endl; cin >> n;
-				if (n = 1) {
+				if (n == 1) {
 					break;
 				}
 			}
-			if (s4 = 0) {
+			if (s4 == 0) {
 				stud4.getstud();
 				stud4.zapis();
 				s4 = 1;
 				cout << "ѕродолжим создавать студентов? " << "0 - да " << "1 - нет " << endl; cin >> n;
-				if (n = 1) {
+				if (n == 1) {
 					break;
 				}
 			}
-			if (s5 = 0) {
+			if (s5 == 0) {
 				stud5.getstud();
 				stud5.zapis();
 				s5 = 1;
 				cout << "ѕродолжим создавать студентов? " << "0 - да " << "1 - нет " << endl; cin >> n;
-				if (n = 1) {
+				if (n == 1) {
 					break;
 				}
 			}
@@ -137,20 +139,20 @@ int main() {
 				if (s1 != 0) {
 					stud1.getstud();
 					cout << "ѕродолжим редактировать или создавать ? " << "0 - да " << "1 - нет " << endl; cin >> n;
-					if (n = 1) {
+					if (n == 1) {
 						break;
 					}
 				}
 				else {
 					cout << "такого студента нет ! желаете создать?" << "0 - да  1 - нет" << endl; cin >> i;
-					if (i = 1) {
+					if (i == 1) {
 						break;
 					}
 					else {
 						stud1.getstud();
 						s1 = 1;
 						cout << "ѕродолжим редактировать или создавать ? " << "0 - да " << "1 - нет " << endl; cin >> n;
-						if (n = 1) {
+						if (n == 1) {
 							break;
 						}
 					}
@@ -159,20 +161,20 @@ int main() {
 				if (s2 != 0) {
 					stud2.getstud();
 					cout << "ѕродолжим редактировать или создавать ? " << "0 - да " << "1 - нет " << endl; cin >> n;
-					if (n = 1) {
+					if (n == 1) {
 						break;
 					}
 				}
 				else {
 					cout << "такого студента нет ! желаете создать?" << "0 - да  1 - нет" << endl; cin >> i;
-					if (i = 1) {
+					if (i == 1) {
 						break;
 					}
 					else {
 						stud2.getstud();
 						s2 = 1;
 						cout << "ѕродолжим редактировать или создавать ? " << "0 - да " << "1 - нет " << endl; cin >> n;
-						if (n = 1) {
+						if (n == 1) {
 							break;
 						}
 					}
@@ -181,20 +183,20 @@ int main() {
 				if (s3 != 0) {
 					stud3.getstud();
 					cout << "ѕродолжим редактировать или создавать ? " << "0 - да " << "1 - нет " << endl; cin >> n;
-					if (n = 1) {
+					if (n == 1) {
 						break;
 					}
 				}
 				else {
 					cout << "такого студента нет ! желаете создать?" << "0 - да  1 - нет" << endl; cin >> i;
-					if (i = 1) {
+					if (i == 1) {
 						break;
 					}
 					else {
 						stud3.getstud();
 						s3 = 1;
 						cout << "ѕродолжим редактировать или создавать ? " << "0 - да " << "1 - нет " << endl; cin >> n;
-						if (n = 1) {
+						if (n == 1) {
 							break;
 						}
 					}
@@ -203,20 +205,20 @@ int main() {
 				if (s4 != 0) {
 					stud4.getstud();
 					cout << "ѕродолжим редактировать или создавать ? " << "0 - да " << "1 - нет " << endl; cin >> n;
-					if (n = 1) {
+					if (n == 1) {
 						break;
 					}
 				}
 				else {
 					cout << "такого студента нет ! желаете создать?" << "0 - да  1 - нет" << endl; cin >> i;
-					if (i = 1) {
+					if (i == 1) {
 						break;
 					}
 					else {
 						stud4.getstud();
 						s4 = 1;
 						cout << "ѕродолжим редактировать или создавать ? " << "0 - да " << "1 - нет " << endl; cin >> n;
-						if (n = 1) {
+						if (n == 1) {
 							break;
 						}
 					}
@@ -225,13 +227,13 @@ int main() {
 				if (s5 != 0) {
 					stud5.getstud();
 					cout << "ѕродолжим редактировать или создавать ? " << "0 - да " << "1 - нет " << endl; cin >> n;
-					if (n = 1) {
+					if (n == 1) {
 						break;
 					}
 				}
 				else {
 					cout << "такого студента нет ! желаете создать?" << "0 - да  1 - нет" << endl; cin >> i;
-					if (i = 1) {
+					if (i == 1) {
 						break;
 					}
 					else {
@@ -243,21 +245,20 @@ int main() {
 			default:
 				cout << "неверно " << endl;
 				break;
-			}
-			stud1.clear();
-			if (s1 = 1) {
+			}// что бы чистило доделать !!!!!!
+			if (s1 == 1) {
 				stud1.zapis();
 			}
-			if (s2 = 1) {
+			if (s2 == 1) {
 				stud2.zapis();
 			}
-			if (s2 = 1) {
+			if (s3 == 1) {
 				stud3.zapis();
 			}
-			if (s2 = 1) {
+			if (s4 == 1) {
 				stud4.zapis();
 			}
-			if (s2 = 1) {
+			if (s5 == 1) {
 				stud5.zapis();
 			}
 			break;
