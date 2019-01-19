@@ -4,14 +4,14 @@
 using namespace std;
 const int X = 256;
 char S1[X] = { "" };
+ofstream inform("laba8c.txt");
 class student {
 	private :
-		ofstream inform;
 		string name;
-		int math;
-		int phys;
-		int inf;
-		int chem;
+		float math;
+		float phys;
+		float inf;
+		float chem;
 		float avarage_ball;
 		int year;
 		int group;
@@ -32,7 +32,6 @@ class student {
 		  cout << "Средний балл : " << avarage_ball << endl;
 	  }
 	  void zapis() {
-		  inform.open("laba8.txt", ios_base::ate);// пишет в конец
 		  inform << "Фамилия и инициалы : " << name << endl;
 		  inform << "Номер группы : " << group<< endl;
 		  inform << "Год рождения " << year << endl;
@@ -42,17 +41,18 @@ class student {
 		  inform << "Химия : " << chem << endl;
 		  inform << "Информатика : " << inf << endl;
 		  inform << "Средний балл : " << avarage_ball << endl;
-		  inform.close();
-
+		  inform << "Конец " << endl;
+		  inform << endl;
 	  }
-	  void av_ball() {
+	  void  av_ball() 
+	  {
 		  avarage_ball = (math + chem + phys + inf) / 4;
 	  }
 	  void read() {
 		  ifstream inform;
 		  const int  N = 256;
-		  char S[N] = { "" };
-		  inform.open("laba8.txt", ios_base::in);
+		  char S[N] = {""};
+		  inform.open("laba8c.txt");
 			  while (!inform.eof()) 
 			  {
 				  inform.getline(S, N);
@@ -62,8 +62,7 @@ class student {
 		  
 	  }
 	  void clear() {
-		  ofstream inform;
-		  inform.open("laba8.txt", ios_base::trunc);
+		  inform.open("laba8c.txt", ios_base::trunc);
 	  }
 };
 int main() {
@@ -78,7 +77,7 @@ int main() {
 		cout << "Выберите что хотите сделать : " << endl;
 		cout << "1 -  создание ученика " << "2 - просмотр информации по ученикам " << endl;
 		cout << "3 - редактирование информации  " << "4 - Варианты ИЗ " << endl;
-		cout << "5 - рейтинг " << " 0 - Выход " << endl; cin >> vybor;
+		cout << "5 - рейтинг "  << endl; cin >> vybor;
 		switch (vybor) {
 		case 1:
 			if (s1 == 0) {
@@ -245,7 +244,8 @@ int main() {
 			default:
 				cout << "неверно " << endl;
 				break;
-			}// что бы чистило доделать !!!!!!
+			}
+			stud1.clear();
 			if (s1 == 1) {
 				stud1.zapis();
 			}
