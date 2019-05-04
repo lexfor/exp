@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include <string>
 const int MAX = 100;
 
 class Edge {
@@ -67,14 +68,16 @@ bool check(int&, std::vector<int>&,std::vector<Node>&,std::vector<Edge>&, std::v
 std::vector<int> find_smej(std::vector<Node>&,std::vector<Edge>&, int&, int&);
 bool is_cactus(std::vector<Node>& ,std::vector<Edge>& );
 void made_connect(std::vector<int>&, std::vector<Node>&, std::vector<Edge>&, int );
-int read(std::vector<int>&);
+void read(std::vector<int>&);
+int find_num();
 
 
 int main() {
 	setlocale(LC_ALL, "rus");
 	int num;
 	std::vector<int> arr; std::vector<Node> arr_n; std::vector<Edge> arr_e;
-	num = read(arr);
+	read(arr);
+	num = find_num();
 	made_connect(arr, arr_n, arr_e, num);
 	if (is_cactus(arr_n, arr_e)) {
 		std::cout << "данный граф является кактусом" << std::endl;
@@ -87,16 +90,30 @@ int main() {
 }
 
 
-int read(std::vector<int>& arr) {
+void read(std::vector<int>& arr) {
 	std::ifstream input;
 	input.open("input.txt");
-	int num_edge,temp;
-	input >> num_edge;
+	int temp;
 	while (!(input.eof())) {
 		input >> temp;
 		arr.push_back(temp);
 	}
-	return num_edge;
+}
+
+
+int find_num() {
+	std::ifstream f("input.txt");
+	std::vector<int> v;
+	int i; int count = 0;
+	while (f >> i) {
+		count++;
+		v.push_back(i);
+		char c = f.get();
+		if (f.eof() || c == '\r' || c == '\n') {
+			break;
+		}
+	}
+	return count;
 }
 
 
