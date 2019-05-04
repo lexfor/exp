@@ -1,0 +1,271 @@
+#include <iostream>
+#include <fstream>
+#include <vector>
+const int MAX = 100;
+
+class Edge {
+private:
+	std::vector<int> connect;
+public:
+	void set_node(int a) {
+		connect.push_back(a);
+	}
+	void put_node() {
+		for (int i = 0; i < connect.size(); i++) {
+			std::cout << connect[i] << std::endl;
+		}
+	}
+	int use_edge(int a) {
+		for (int i = 0; i < connect.size(); i++) {
+			if (connect[i] != a) {
+				return connect[i];
+			}
+		}
+	}
+};
+
+
+class Node {
+private:
+	std::vector<int>what_conn;
+	std::vector<int>cycle;
+public:
+	void set_edge(int a) {
+		what_conn.push_back(a);
+	}
+	void put_edge() {
+		for (int i = 0; i < what_conn.size(); i++) {
+			std::cout << what_conn[i] << std::endl;
+		}
+	}
+	std::vector<int> ret_edge() {
+		return what_conn;
+	}
+	void set_cycle(int a) {
+		cycle.push_back(a);
+	}
+	bool check_cycle(int a) {
+		for (int i = 0; i < cycle.size(); i++) {
+			if (cycle[i] == a) {
+				return true;
+			}
+		}
+		return false;
+	}
+};
+int find(int a,int num) {
+	int temp = a /num;
+	a -= (temp * num);
+	return a;
+}
+
+bool is_get_in_cycle(std::vector<int>&, std::vector<int>&);
+bool check_cycle(std::vector<int>&);
+bool is_in_cycle(std::vector<int>&,int&);
+bool is_cycle(std::vector<int>&, int&);
+bool check(int&, std::vector<int>&,std::vector<Node>&,std::vector<Edge>&, std::vector<int>&, int&);
+std::vector<int> find_smej(std::vector<Node>&,std::vector<Edge>&, int&, int&);
+bool is_cactus(std::vector<Node>& ,std::vector<Edge>& );
+void made_connect(std::vector<int>&, std::vector<Node>&, std::vector<Edge>&, int );
+int read(std::vector<int>&);
+
+
+int main() {
+	setlocale(LC_ALL, "rus");
+	int num;
+	std::vector<int> arr; std::vector<Node> arr_n; std::vector<Edge> arr_e;
+	num = read(arr);
+	made_connect(arr, arr_n, arr_e, num);
+	if (is_cactus(arr_n, arr_e)) {
+		std::cout << "данный граф является кактусом" << std::endl;
+	}
+	else {
+		std::cout << "данный граф не является кактусом" << std::endl;
+	}
+	std::cin.get();
+	return 0;
+}
+
+
+int read(std::vector<int>& arr) {
+	std::ifstream input;
+	input.open("input.txt");
+	int num_edge,temp;
+	input >> num_edge;
+	while (!(input.eof())) {
+		input >> temp;
+		arr.push_back(temp);
+	}
+	return num_edge;
+}
+
+
+void made_connect(std::vector<int>&arr, std::vector<Node>&arr_n, std::vector<Edge>&arr_e, int num) {
+	int j = 0; int count = 0;
+	int temp = num;
+	for (int i = 0; i < num; i++) {
+		Edge a;
+		arr_e.push_back(a);
+	}
+	while (j < (arr.size() - 1)) {
+		Node a;
+		for (j; j < temp; j++) {
+			if (arr[j] != 0) {
+				if (j > (num - 1)) {
+					int temp1 = find(j,num);
+					temp1;
+					a.set_edge(temp1);
+					arr_e[temp1].set_node(count);
+				}
+				else {
+					int temp1 = j;
+					temp1;
+					a.set_edge(temp1);
+					arr_e[temp1].set_node(count);
+				}
+			}
+		}
+		arr_n.push_back(a);
+		temp += num;
+		count++;
+	}
+}
+
+bool is_cactus(std::vector<Node>& arr_n, std::vector<Edge>& arr_e) {
+	std::vector<int> cycle;
+	for (int i = 0; i < arr_n.size(); i++) {
+		std::vector<int> smej_ver;
+		int t = -1;
+		smej_ver = find_smej(arr_n, arr_e, i, t);
+		if (smej_ver.size() > 1) {
+			for (int j = 0; j < smej_ver.size(); j++) {
+				if (arr_n[i].check_cycle(smej_ver[j])) {
+					continue;
+				}
+				std::vector<int>get1;
+				get1.push_back(i);
+				get1.push_back(smej_ver[j]);
+				if (is_get_in_cycle(get1,cycle) && is_get_in_cycle(get1,cycle)) {
+					cycle.push_back(-10);
+					continue;
+				}
+				std::vector<int> get;
+				get.push_back(i);
+				if (check(i, get, arr_n, arr_e, cycle, smej_ver[j])) {
+					arr_n[i].set_cycle(smej_ver[j]);
+					cycle.push_back(-1);
+				}
+			}
+		}
+	}
+	if (check_cycle(cycle)) {
+		return true;
+	}
+	return false;
+}
+
+std::vector<int> find_smej(std::vector<Node>& arr_n,std::vector<Edge>& arr_e, int& a,int& b) {
+	std::vector<int> edge; std::vector<int> ret;
+	edge = arr_n[a].ret_edge();
+	for (int i = 0; i < edge.size(); i++) {
+		if (arr_e[edge[i]].use_edge(a) == b) {
+			continue;
+		}
+		ret.push_back(arr_e[edge[i]].use_edge(a));
+	}
+	return ret;
+}
+
+bool check(int& last, std::vector<int>& get,std::vector<Node>&arr_n,std::vector<Edge>& arr_e, std::vector<int>& cycle, int& that) {
+	std::vector<int> smej;
+	smej = find_smej(arr_n,arr_e,that,last);
+	if (smej.size() < 1) {
+		return false;
+	}
+	get.push_back(that);
+	if (is_get_in_cycle(get, cycle)) {
+		cycle.push_back(-10);
+	}
+	for (int i = 0; i < smej.size(); i++) {
+		if (arr_n[that].check_cycle(smej[i])) {
+			continue;
+		}
+		if (is_cycle(get, smej[i])) {
+			arr_n[that].set_cycle(smej[i]);
+			arr_n[that].set_cycle(last);
+			arr_n[smej[i]].set_cycle(that);
+			cycle.push_back(smej[i]);
+			cycle.push_back(that);
+			get.pop_back();
+			return true;
+		}
+		if (check(that, get, arr_n, arr_e, cycle, smej[i])) {
+			if (is_in_cycle(cycle, that)) {
+				arr_n[that].set_cycle(smej[i]);
+				cycle.push_back(-1);
+				continue;
+			}
+			get.pop_back();
+			arr_n[that].set_cycle(smej[i]);
+			arr_n[that].set_cycle(last);
+			cycle.push_back(that);
+			return true;
+		}
+	}
+	get.pop_back();
+	return false;
+}
+
+bool is_cycle(std::vector<int>& get, int& a) {
+	for (int i = 0; i < get.size(); i++) {
+		if (get[i] == a) {
+			return true;
+		}
+	}
+	return false;
+}
+
+bool is_in_cycle(std::vector<int>& cycle,int& a) {
+	for (int i = 0; i < cycle.size(); i++) {
+		if (cycle[i] == a) {
+			return true;
+		}
+	}
+	return false;
+}
+
+bool check_cycle(std::vector<int>& cycle) {
+	if (cycle.empty()) {
+		return true;
+	}
+	for (int i = 0; i < cycle.size(); i++) {
+		if (cycle[i] == -10) {
+			return false;
+		}
+		if (cycle[i] == -1) {
+			continue;
+		}
+	}
+	return true;
+}
+
+bool is_get_in_cycle(std::vector<int>& get, std::vector<int>& cycle) {
+	int count1; int count2 = 0; int count3 = 0;
+	for (int i = 0; i < get.size(); i++) {
+		count1 = 0;
+		for (int j = 0; j < cycle.size(); j++) {
+			if (cycle[j] == -1) {
+				count1++;
+			}
+			if (get[i] == cycle[j]) {
+				if (count2 == 1 &&count3 == count1) {
+					return true;
+				}
+				count2++;
+				count3 = count1;
+				break;
+			}
+		}
+	}
+	return false;
+}
